@@ -70,3 +70,11 @@ def edit_task(task_id):
         flash('New task was successfully added')
         return redirect(url_for('home'))
     return render_template('edit_task.html', task=task, categories=categories)
+
+@app.route('/delete_task/<int:task_id>', methods=['GET', 'POST'])
+def delete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    db.session.delete(task)
+    db.session.commit()
+    flash('The task was successfully deleted')
+    return redirect(url_for('home'))
